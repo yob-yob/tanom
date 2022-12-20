@@ -1,11 +1,10 @@
-import { error, redirect } from '@sveltejs/kit';
+import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import gitlab from '$lib/services/gitlab'
 import { supabase } from '$lib/services/supabase';
  
 export const load = (async (data) => {
   const parent = await data.parent()
-
-
   if (parent.session === null) {
     throw redirect(302, '/login')
   }
@@ -14,14 +13,20 @@ export const load = (async (data) => {
     throw redirect(302, '/account')
   }
 
-  const { data: projects, error: err } = await supabase.from('projects').select();
 
-  if (err) {
-    throw error(402, err.message)
+  if (parent.session.provider_token === null || parent.session.provider_token === undefined) {
+    const { provider, url } = await gitlab.signIn()
+    if (url) {
+      throw redirect(302, url);
+    } else {
+      throw redirect(304, '/projects');
+    }
   }
 
   return {
     session: parent.session,
-    projects: projects
+    gitlab: {
+      projects: await new gitlab(parent.session.provider_token).projects()
+    }
   }
 }) satisfies PageServerLoad;

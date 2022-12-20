@@ -1,25 +1,25 @@
 <script lang="ts">
-  import { supabase } from '$lib/services/supabase'
-  import gitlab from '$lib/services/gitlab'
+	import type { SubmitFunction } from "$app/forms";
+  import { supabase } from "$lib/services/supabase"
+	import gitlab from "$lib/services/gitlab";
+  import LoginRequest from "$lib/requests/LoginRequest";
+	import type { ActionData } from "./$types";
+	import { ValidationMessageBag } from "$lib/helpers/MessageBag";
+
+  const validator = LoginRequest.validator();
 
   let loading = false
-  let email: string
-  let password: string
+  let MessageBag: ValidationMessageBag<typeof validator> = ValidationMessageBag.fromZodIssues([]);
 
-  const handleLogin = async () => {
-    try {
-      loading = true
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password })
-      if (error) throw error
-      console.log(data);
-      alert('Logged In')
-    } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message)
-      }
-    } finally {
-      loading = false
-    }
+  export let form: ActionData;
+
+  let email: string;
+  let password: string;
+
+  if (form) {
+    MessageBag = ValidationMessageBag.fromZodIssues(form.validation)  
+    email = form.old?.email;
+    password = form.old?.password;
   }
 </script>
 
@@ -28,18 +28,25 @@
     Login
   
     <div class="border p-5">
-      <form action="" on:submit|preventDefault="{handleLogin}">
+      <form action="?/login" method="POST">
+        {#if form && !form.succeess}
+           <span>{form.message}</span>
+        {/if}
         <div>
           <label for="email">Email</label>
-          <input type="text" name="email" id="email" bind:value="{email}">
+          <input type="email" name="email" id="email" bind:value={email} required>
+          {#if MessageBag.has('email')}
+            <p class="error">
+              {MessageBag.get('email')}
+            </p>
+          {/if}
         </div>
         <div>
           <label for="password">Password</label>
-          <input type="password" name="password" id="password" bind:value="{password}">
+          <input type="password" name="password" id="password" bind:value={password}>
         </div>
         <button type="submit" disabled="{loading}" class="bg-green-300">Login</button>
       </form>
-      <button on:click="{gitlab.signIn}">Login Directly Using Gitlab</button>
     </div>
   </div>
 </div>

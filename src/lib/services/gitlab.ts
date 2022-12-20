@@ -1,3 +1,4 @@
+import { PUBLIC_APP_URL } from '$env/static/public'
 import { supabase } from './supabase'
 
 class gitlab {
@@ -10,17 +11,18 @@ class gitlab {
 
   public static signIn = async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: 'gitlab',
+      provider: 'gitlab', 
       options: {
-        scopes: 'read_user read_api'
+        scopes: 'read_user read_api',
+        redirectTo: PUBLIC_APP_URL
       }
     })
 
     if (error) {
-      alert(error.message)
-    } else {
-      console.log(data)
+      console.log(error)
     }
+
+    return data;
   }
 
   public async projects () {

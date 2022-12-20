@@ -1,8 +1,10 @@
-<script type="ts">
-  import { page } from '$app/stores'
+<script lang="ts">
   import gitlab from '$lib/services/gitlab';
+	import type { PageData } from './$types';
 
-  const user = $page.data.session.user;
+  export let data: PageData;
+
+  const user = data.session.user;
 </script>
 
 <div>
@@ -10,10 +12,5 @@
     Account page
   </h1>
   
-  {#if !user.app_metadata.providers.includes('gitlab')}
-    <p>Link Gitlab Account</p>
-    <button class="btn" on:click={gitlab.signIn}>Sign-in your GitLab Account</button>
-  {:else}
-    <a href="/projects">Gitlab Projects</a>
-  {/if}
+  <a href="/projects">Projects</a>
 </div>

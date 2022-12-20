@@ -16,10 +16,6 @@
       subscription.unsubscribe()
     }
   })
-
-  async function signOut() {
-    const { error } = await supabase.auth.signOut()
-  }
 </script>
 
 <header>
@@ -32,12 +28,14 @@
       <a href="/register">Register</a>
     {:else}
       <a href="/account">Account</a>
-      <button on:click="{signOut}">logout</button>
+      <form action="/logout" method="POST">
+        <button type="submit">logout</button>
+      </form>
     {/if}
   </div>
 </nav>
 </header>
-<main>
+<main class="container mx-auto px-5 mb-10">
   <slot />
 </main>
 <footer>

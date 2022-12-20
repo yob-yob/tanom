@@ -1,15 +1,18 @@
-<script type="ts">
-  import { page } from '$app/stores'
+<script lang="ts">
+	import type { PageData } from './$types';
+  
+  export let data: PageData;
 
-  const user = $page.data.session.user
-  let projects = $page.data.projects;
+  let projects = data.projects;
 </script>
 
 <div>
-  List Of Gitlab Projects
-  <ul>
-    {#each projects as project}
-       <li>{project.name}</li>
-    {/each}
-  </ul>
+  <span>Projects</span>
+  <a href="/projects/create">create new project</a>
+  <!-- List Imported Projects from Git Providers -->
+  {#each projects as project}
+    {project.name}
+  {:else}
+    <span>No Projects</span>
+  {/each}
 </div>
