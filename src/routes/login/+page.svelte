@@ -1,7 +1,4 @@
 <script lang="ts">
-	import type { SubmitFunction } from "$app/forms";
-  import { supabase } from "$lib/services/supabase"
-	import gitlab from "$lib/services/gitlab";
   import LoginRequest from "$lib/requests/LoginRequest";
 	import type { ActionData } from "./$types";
 	import { ValidationMessageBag } from "$lib/helpers/MessageBag";

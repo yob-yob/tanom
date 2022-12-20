@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { PageData } from './$types';
   import Icon from '@iconify/svelte';
-  import gitlab from '$lib/services/gitlab'
   import Time from "svelte-time";
 
   export let data: PageData;
@@ -41,7 +40,8 @@
             </div>
           </div>
           <form action="?/import">
-            <button type="submit" class="bg-blue-400 p-2 rounded" on:click="{gitlab.import()}">Import</button>
+            <input type="hidden" bind:value="{project.id}">
+            <button type="submit" class="bg-blue-400 p-2 rounded">Import</button>
           </form>
         </div>
        </li>

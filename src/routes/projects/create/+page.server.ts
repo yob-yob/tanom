@@ -1,7 +1,7 @@
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import gitlab from '$lib/services/gitlab'
-import { supabase } from '$lib/services/supabase';
+import { gitlab } from '$lib/services/gitlab'
+import type { Actions } from './$types';
  
 export const load = (async (data) => {
   const parent = await data.parent()
@@ -30,3 +30,10 @@ export const load = (async (data) => {
     }
   }
 }) satisfies PageServerLoad;
+
+export const actions: Actions = {
+  createProject: async ({request, locals}) => {
+
+  }
+}
+

@@ -1,9 +1,7 @@
 import model from './model'
 
-class projects extends model {
+export default class projects extends model {
   constructor() {
     super('projects')
   }
 }
-
-export default projects

@@ -1,7 +1,7 @@
 import { PUBLIC_APP_URL } from '$env/static/public'
-import { supabase } from './supabase'
+import { supabase } from '$lib/services/supabase'
 
-class gitlab {
+export class gitlab {
   public token: string | null
   public base_url: string = 'https://gitlab01.copyleft.no/api/v4'
 
@@ -38,5 +38,3 @@ class gitlab {
     });
   }
 }
-
-export default gitlab

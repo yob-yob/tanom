@@ -1,5 +1,4 @@
 <script lang="ts">
-  import gitlab from '$lib/services/gitlab';
 	import type { PageData } from './$types';
 
   export let data: PageData;

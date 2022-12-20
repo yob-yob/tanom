@@ -1,10 +1,8 @@
 import { error, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import { supabase } from '$lib/services/supabase';
  
 export const load = (async (data) => {
   const parent = await data.parent()
-
 
   if (parent.session === null) {
     throw redirect(302, '/login')
@@ -14,7 +12,7 @@ export const load = (async (data) => {
     throw redirect(302, '/account')
   }
 
-  const { data: projects, error: err } = await supabase.from('projects').select();
+  const { data: projects, error: err } = await data.locals.supabase.from('projects').select();
 
   if (err) {
     throw error(402, err.message)
