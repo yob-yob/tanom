@@ -1,5 +1,4 @@
-import { PUBLIC_APP_URL } from '$env/static/public'
-import { VITE_VERCEL_URL } from '$env/static/private';
+import { VERCEL_URL } from '$env/static/private';
 import { supabase } from '$lib/services/supabase'
 
 export class gitlab {
@@ -15,7 +14,7 @@ export class gitlab {
       provider: 'gitlab', 
       options: {
         scopes: 'read_user read_api',
-        redirectTo: VITE_VERCEL_URL ?? PUBLIC_APP_URL
+        redirectTo: VERCEL_URL
       }
     })
 
