@@ -1,7 +1,7 @@
 import { AuthApiError } from "@supabase/supabase-js"
 import { error, fail, redirect, type Action } from "@sveltejs/kit";
-import LoginRequest from "$lib/requests/LoginRequest"
-import RegisterRequest from "$lib/requests/RegisterRequest"
+import LoginRequest from "$lib/http/requests/LoginRequest"
+import RegisterRequest from "$lib/http/requests/RegisterRequest"
 
 export const login: Action = async ({ request, locals }) => {
   const LoginForm = new LoginRequest(request)

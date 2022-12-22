@@ -1,5 +1,5 @@
 <script lang="ts">
-  import LoginRequest from "$lib/requests/LoginRequest";
+  import LoginRequest from "$lib/http/requests/LoginRequest";
 	import type { ActionData } from "./$types";
 	import { ValidationMessageBag } from "$lib/helpers/MessageBag";
 
