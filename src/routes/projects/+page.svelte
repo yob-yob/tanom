@@ -8,11 +8,17 @@
 
 <div>
   <span>Projects</span>
+  <br>
   <a href="/projects/create">create new project</a>
+  <br>
   <!-- List Imported Projects from Git Providers -->
-  {#each projects as project}
-    {project.name}
-  {:else}
-    <span>No Projects</span>
-  {/each}
+  <ul>
+    <li>
+      {#each projects as project}
+        <span>{project.name}</span>
+      {:else}
+        <span>No Projects</span>
+      {/each}
+    </li>
+  </ul>
 </div>

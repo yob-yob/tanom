@@ -4,16 +4,24 @@
  * 
  */
 
+import { fail, type Action } from "@sveltejs/kit";
+import CreateProjectRequest from "$lib/http/requests/CreateProjectRequest";
 
-import type { Actions } from "@sveltejs/kit";
+export const create: Action = async ({request, locals}) => {
 
-export const actions: Actions = {
-  create: async ({request, locals}) => {
+  const createProjectRequest = new CreateProjectRequest(request)
 
-    
+  const validation = await createProjectRequest.validate()
 
-    locals.supabase.from('projects').insert([{
-      
-    }])
+  if (!validation.success) {
+    return fail(422 , { 
+      success: false,
+      name: "Validation Error",
+      message: "Sorry about that, please check the form errors for procceed with submittion.",
+      validation: validation.error.issues,
+      old: await createProjectRequest.getBody(),
+    });
   }
+
+  locals.supabase.from('projects').insert([validation.data])
 }

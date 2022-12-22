@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export default class LoginRequest {
+export default class CreateProjectRequest {
   private request: Request;
   private body: {
       [k: string]: FormDataEntryValue;
@@ -46,6 +46,6 @@ export default class LoginRequest {
   }
 
   public async validate() {
-    return LoginRequest.validator().safeParse(await this.getBody());
+    return CreateProjectRequest.validator().safeParse(await this.getBody());
   }
 }

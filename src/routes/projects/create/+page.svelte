@@ -39,7 +39,7 @@
               </div>
             </div>
           </div>
-          <form action="?/import">
+          <form action="?/create">
             <input type="hidden" bind:value="{project.id}">
             <button type="submit" class="bg-blue-400 p-2 rounded">Import</button>
           </form>
